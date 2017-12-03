@@ -1,75 +1,53 @@
-﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Support.PageObjects;
-using SeleniumWebDriverTemplateProject.Pages.Abstract;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Support.PageObjects;
+using SeleniumWebDriverTemplateProject.Pages.Abstract;
 
 namespace SeleniumWebDriverTemplateProject.Pages
 {
     class CheckOutPage : Page
     {
-        [FindsBy(How = How.ClassName, Using = "checkout_cart")]
-        public IWebElement CheckOutCartRoot { get; set; }
+        [FindsBy(How = How.Id, Using = "FirstName")]
+        public IWebElement FirstNameField { get; set; }
 
-        [FindsBy(How = How.CssSelector, Using = ".step2 > span:nth-child(1)")]
-        public IWebElement ContiniueButton { get; set; }
+        [FindsBy(How = How.Id, Using = "LastName")]
+        public IWebElement LastNameField { get; set; }
 
-        [FindsBy(How = How.CssSelector, Using = ".yourtotal > span:nth-child(1)")]
-        public IWebElement SubTotalTextBox { get; set; }
+        [FindsBy(How = How.Id, Using = "Address")]
+        public IWebElement AddressField { get; set; }
 
-        public int GetSubTotal()
-        {
-            string rawSubTotal = this.SubTotalTextBox.Text;
-            string subTotalAsString = Regex.Match(rawSubTotal, @"\d+").Value;
-            int subTotalAsInt = Convert.ToInt32(subTotalAsString);
+        [FindsBy(How = How.Id, Using = "City")]
+        public IWebElement CityField { get; set; }
 
-            return subTotalAsInt;
-        }
+        [FindsBy(How = How.Id, Using = "State")]
+        public IWebElement StateField { get; set; }
 
-        public List<IWebElement> GetProductNames()
-        {
-            var productNames = this.CheckOutCartRoot.FindElements(By.CssSelector(".wpsc_product_name a"));
+        [FindsBy(How = How.Id, Using = "PostalCode")]
+        public IWebElement PostalCodeField { get; set; }
 
-            return productNames.ToList<IWebElement>();
-        }
+        [FindsBy(How = How.Id, Using = "Country")]
+        public IWebElement CountryField { get; set; }
 
-        public List<IWebElement> GetQuantityTextBoxes()
-        {
-            var quantityTextBoxes = this.CheckOutCartRoot.FindElements(By.Name("quantity"));
+        [FindsBy(How = How.Id, Using = "Phone")]
+        public IWebElement PhoneField { get; set; }
 
-            return quantityTextBoxes.ToList<IWebElement>();
-        }
+        [FindsBy(How = How.Id, Using = "Email")]
+        public IWebElement EmailField { get; set; }
 
-        public List<IWebElement> GetUpdateButtons()
-        {
-            var quantityTextBoxes = this.CheckOutCartRoot.FindElements(By.CssSelector("value~=[Update]"));
+        [FindsBy(How = How.Id, Using = "PromoCode")]
+        public IWebElement PromoCodeField { get; set; }
 
-            return quantityTextBoxes.ToList<IWebElement>();
-        }
+        //[FindsBy(How = How.TagName, Using = "fieldset +input")]
+        [FindsBy(How = How.XPath, Using = "/html/body/div[2]/form/input[1]")]
+        public IWebElement SubmitOrderButton { get; set; }
 
-        public List<IWebElement> GetPriceTextBoxes()
-        {
-            var priceTextBoxes = this.CheckOutCartRoot.FindElements(By.CssSelector("td:nth-child(4) > span:nth-child(1)"));
+        [FindsBy(How = How.CssSelector, Using = ".container h2")]
+        public IWebElement CheckoutCompleteText { get; set; }
 
-            return priceTextBoxes.ToList<IWebElement>();
-        }
 
-        public List<IWebElement> GetTotalTextBoxes()
-        {
-            var totalCheckBoxes = this.CheckOutCartRoot.FindElements(By.CssSelector(".wpsc_product_price > span > span"));
-       
-            return totalCheckBoxes.ToList<IWebElement>();
-        }
-
-        public List<IWebElement> GetRemoveButtons()
-        {
-            var totalCheckBoxes = this.CheckOutCartRoot.FindElements(By.CssSelector("value=[Remove]"));
-
-            return totalCheckBoxes.ToList<IWebElement>();
-        }
     }
 }
